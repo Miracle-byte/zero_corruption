@@ -3,6 +3,7 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.by import By
 
 import time
+import requests
 
 driver = webdriver.Firefox()
 # driver.get("https://dxarid.uzex.uz/")
@@ -29,5 +30,14 @@ for table in tables:
             cost = cells[6].text
             info = cells[7].text
             print(lot,"|",nom,"|",cost)
-            #
+            # https://dxarid.uzex.uz/ru/trade/lot/5356270/
+            #url1 = 'https://dxarid.uzex.uz/ru/trade/lot/'+lot
+            #print(url1)
+            #r = requests.get(url1)
+            #print(dir(r))
+            #print(r.status_code)
+            #print(r.content)
+            #print(r.headers)
+            #driver.close()
+            #exit(0)
 driver.close()

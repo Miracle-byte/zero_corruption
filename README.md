@@ -58,3 +58,27 @@ https://lex.uz/docs/-3088008
 # https://eanticor.uz/uz/
 # https://data.egov.uz/rus
 # https://reestr.uz/uz
+
+# STIR bo'yicha 
+## http://registr.stat.uz/enter_form/index.php
+
+# Completed lot lar bo'yicha
+## http://xarid.uz/dxarid/deals?status=Completed
+## blob:http://xarid.uz/0061747c-17f2-44b6-b88b-9317ee4f7542
+
+
+# Korrupsiya bo'yicha risklarni baholash
+
+
+
+04-12-2021
+==========
+
+Pora olish-berish bilan kurashish siyosati
+Boshqaruv organi, majburiyat va mas’uliyat
+Xodimlarni nazorat qilish va o‘qitish
+Xatarlarni baholash
+Loyihalar va biznes hamkorlarni kompleks tekshirish
+Moliyaviy, tijoriy va shartnomaviy nazorat
+Hisobot, monitoring, surishtirish va umumiy tahlil
+To‘g‘rilovchi harakatlar va doimiy yaxshilash
