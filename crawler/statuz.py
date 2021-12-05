@@ -13,27 +13,32 @@ mydb = mysql.connector.connect(
 mycursor = mydb.cursor()
 driver = webdriver.Firefox()
 
-sql = "SELECT stir FROM stir_html3s"
-mycursor.execute(sql)
-myresult = mycursor.fetchall()
+#sql = "SELECT stir FROM stir_html3s"
+#mycursor.execute(sql)
+#myresult = mycursor.fetchall()
 stirs = []
-for x in myresult:
-    stirs.append(x[0])
+#for x in myresult:
+#    stirs.append(x[0])
 
-sql = "SELECT zakazchik_inn from buyurtmas"
+sql = "SELECT inn from golibs"
 mycursor.execute(sql)
-
 myresult = mycursor.fetchall()
-
+l1 = False
 for x in myresult:
     stir = x[0]
+    if len(stir.split('-')) > 1:
+        l1 = True
+    if l1 == False:
+        continue
+    stir = x[0].split('-')[0]
     if int(stir) in stirs:
         print(stir,"exists")
         continue
-    else:
-        print(stir)
-    # undan oldin
-    url = "http://registr.stat.uz/ext/find_stat.php?OKPO=%s&capcha=xsumhi&send=Ochish&UZ=1" % stir
+    
+    #else:
+    #    print(stir)
+    # undan oldin http://registr.stat.uz/ext/find_stat.php?OKPO=305295610&capcha=fvxzpf&send=Ochish&UZ=1
+    url = "http://registr.stat.uz/ext/find_stat.php?OKPO=%s&capcha=fvxzpf&send=Ochish&UZ=1" % stir
     print(stir,url)
     driver.get(url)
     #time.sleep(1)
