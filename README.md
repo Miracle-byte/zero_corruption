@@ -91,3 +91,7 @@ datahack.uz antikorrupsiya uchun loyiha.
 
 # Korrupsiyaga oid indeks
     https://gtmarket.ru/ratings/corruption-perceptions-index
+
+
+# Cypher so'rovlari
+    MATCH (t:Tasischi)<--(f:Firma)-->(fn:FirmaNom) RETURN t,f,fn LIMIT 20

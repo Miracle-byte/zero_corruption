@@ -54,12 +54,14 @@ for x in myresult:
     for a in res1:
         mah_id = a[0]
     buyurtma_id = x[0]
+    lotnum = x[2]
+    print("lotnum",lotnum)
     golib_id = getFirmaId(getGolibInn(x[11]))
     print(x[10])
     zakazchik_id = getFirmaId(x[10])
-    sql = "INSERT INTO buyurtma4s(lot_id,mahid,buyurtmaid,golibid) VALUES(%s,%s,%s)"
+    sql = "INSERT INTO buyurtma4s(lot_id,mahid,buyurtmaid,golibid) VALUES(%s,%s,%s,%s)"
     print((mah_id,buyurtma_id,zakazchik_id,golib_id))
     if golib_id != 0:
-        mycursor.execute(sql,(mah_id,buyurtma_id,golib_id))
+        mycursor.execute(sql,(int(lotnum),mah_id,buyurtma_id,golib_id))
 
 mydb.commit()
