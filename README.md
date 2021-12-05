@@ -88,3 +88,6 @@ datahack.uz antikorrupsiya uchun loyiha.
 # stat.uz dan firma lar haqida nomlar parse qilindi
 
 # Neo4j da svyazkalarni hosil qilish
+
+# Korrupsiyaga oid indeks
+    https://gtmarket.ru/ratings/corruption-perceptions-index
