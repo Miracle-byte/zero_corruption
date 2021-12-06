@@ -95,3 +95,33 @@ datahack.uz antikorrupsiya uchun loyiha.
 
 # Cypher so'rovlari
     MATCH (t:Tasischi)<--(f:Firma)-->(fn:FirmaNom) RETURN t,f,fn LIMIT 20
+
+
+06-12-2021
+==========
+
+# daryo.uz
+    https://daryo.uz/2021/12/06/toshkentda-bosh-prokuratura-mansabdori-29-ming-dollar-pora-olayotganda-qolga-tushdi/
+    
+# MATCH (n:Rahbar{fio:'XALMURADOV RUSTAM IBRAGIMOVICH'}) RETURN n LIMIT 25
+# MATCH (n:Rahbar{fio:'ESHMATOV FARXOD TO‘XTAMURODOVICH'}) RETURN n LIMIT 25
+# MATCH (n:Rahbar{fio:'FURQATOV RUSTAM FURQATOVICH'}) RETURN n LIMIT 25
+
+# Learning Cypher
+    MATCH (n:Person)-[r*1..3]->(m:Person) RETURN *
+    MATCH (n:Person) WHERE n.age < 30 RETURN n.name, n.age
+    MATCH (n:Person)-[k:KNOWS]->(f) WHERE k.since < 2000 RETURN f.name, f.age, f.email
+    WITH 'AGE' AS propname MATCH (n:Person) WHERE n[toLower(propname)] < 30 RETURN n.name, n.age
+    MATCH (n:Person) WHERE n.belt IS NOT NULL RETURN n.name, n.belt
+    MATCH (n:Person) WHERE n.name STARTS WITH 'Pet' RETURN n.name, n.age
+    MATCH (n:Person) WHERE n.name ENDS WITH 'ter' RETURN n.name, n.age
+    MATCH (n:Person) WHERE n.name CONTAINS 'ete' RETURN n.name, n.age
+
+    MATCH (p:PERSON)-[:LIVES]->(c:CITY) WITH p,count(c) as rels, collect(c) as cities WHERE rels > 1 RETURN p,cities, rels
+
+    MATCH (t:Tasischi)<--(f:Firma) with t,count(f) as cnt,collect(f) as cnt1  where cnt > 10 RETURN * LIMIT 25
+
+    MATCH (t:Tasischi)<--(f:Firma)-->(r:Rahbar) with count(t) as cnt,f,r,collect(t) as cnt1  where cnt > 1 RETURN * LIMIT 25
+
+# bitta rahbarning 1 dan ortiq firmasi bo'lsa shularni chiqarish
+    MATCH (r:Rahbar)<--(f:Firma) with count(f) as cnt,r,collect(f) as cnt1 where cnt > 1 RETURN * 

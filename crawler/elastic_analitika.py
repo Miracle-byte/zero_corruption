@@ -4,6 +4,32 @@ es = Elasticsearch()
 
 import mysql.connector
 
+def getgolibname(inn):
+    print("getGolibInn:",inn)
+    global mydb
+    mycursor = mydb.cursor()
+    sql = "SELECT fn.nom FROM firma_noms fn INNER JOIN firmas f on f.fnomid = fn.id and f.inn = %s"
+    mycursor.execute(sql,(str(inn),))
+    myresult = mycursor.fetchall()
+    ret = ""
+    for x in myresult:
+        ret = x[0]
+    mycursor.close()
+    return ret
+
+def getGolibInn(inn):
+    print("getGolibInn:",inn)
+    global mydb
+    mycursor = mydb.cursor()
+    sql = "SELECT inn FROM golibs WHERE id = %s"
+    mycursor.execute(sql,(str(inn),))
+    myresult = mycursor.fetchall()
+    ret = 0
+    for x in myresult:
+        ret = x[0]
+    mycursor.close()
+    return ret
+
 mydb = mysql.connector.connect(
   host="localhost",
   user="root",
@@ -28,6 +54,11 @@ for x in myresult:
     end_narx = x[8]
     zakazchik = x[9]
     zakazchikinn = x[10]
+    glid = x[11]
+    golibinn = getGolibInn(glid)
+    golibfirmaname = getgolibname(golibinn)
+    #print(golibfirmaname)
+    #exit(0)
     doc = {
         'tur': tur,
         'lot':lot,
@@ -39,11 +70,13 @@ for x in myresult:
         'end_narx':end_narx,
         'zakazchik':zakazchik,
         'zakazchikinn':zakazchikinn,
+        'golibinn':golibinn,
+        'golibnomi':golibfirmaname,
         'timestamp': end_date,
     }
-    res = es.index(index="zero_corruption1", id=rid, document=doc)
+    res = es.index(index="zero_corruption2", id=rid, document=doc)
     print(res['result'])
-    es.indices.refresh(index="zero_corruption1")
+    es.indices.refresh(index="zero_corruption2")
     # golib_name = ""
     # golib_inn = 0
     #print(x)
