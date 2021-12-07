@@ -103,9 +103,9 @@ datahack.uz antikorrupsiya uchun loyiha.
 # daryo.uz
     https://daryo.uz/2021/12/06/toshkentda-bosh-prokuratura-mansabdori-29-ming-dollar-pora-olayotganda-qolga-tushdi/
     
-# MATCH (n:Rahbar{fio:'XALMURADOV RUSTAM IBRAGIMOVICH'}) RETURN n LIMIT 25
-# MATCH (n:Rahbar{fio:'ESHMATOV FARXOD TO‘XTAMURODOVICH'}) RETURN n LIMIT 25
-# MATCH (n:Rahbar{fio:'FURQATOV RUSTAM FURQATOVICH'}) RETURN n LIMIT 25
+    MATCH (n:Rahbar{fio:'XALMURADOV RUSTAM IBRAGIMOVICH'}) RETURN n LIMIT 25
+    MATCH (n:Rahbar{fio:'ESHMATOV FARXOD TO‘XTAMURODOVICH'}) RETURN n LIMIT 25
+    MATCH (n:Rahbar{fio:'FURQATOV RUSTAM FURQATOVICH'}) RETURN n LIMIT 25
 
 # Learning Cypher
     MATCH (n:Person)-[r*1..3]->(m:Person) RETURN *
@@ -125,3 +125,8 @@ datahack.uz antikorrupsiya uchun loyiha.
 
 # bitta rahbarning 1 dan ortiq firmasi bo'lsa shularni chiqarish
     MATCH (r:Rahbar)<--(f:Firma) with count(f) as cnt,r,collect(f) as cnt1 where cnt > 1 RETURN * 
+
+07-12-2021
+==========
+
+# my.soliq.uz dan STIR orqali YATT rahbarini olish

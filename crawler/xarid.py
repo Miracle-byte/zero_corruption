@@ -13,6 +13,21 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
+def existsLotNum(lotnum):
+    global mydb
+    mycursor = mydb.cursor()
+    sql = "SELECT id FROM buyurtmas WHERE lotnum = %s"
+    mycursor.execute(sql,(str(lotnum),))
+    myresult = mycursor.fetchall()
+    ret = False
+    for x in myresult:
+        ret = True
+        break
+    mycursor.close()
+    return ret
+
+mavjudLotlar = 0
+
 for i in range(1,100):
     url = "http://xarid.uz/ajax/dxarid?page=%d&auction=Stats&status=Completed&year=2021" % (i)
     print(url)
@@ -32,6 +47,9 @@ for i in range(1,100):
         #print(cols)
         print("==========================")
         len1 = len(cols)
+        if len1 < 9:
+            print("boshqa page qolmadi ishni yakunlaymiz")
+            break
         #print(cols[1].text)
         lot1 = cols[1].text.strip()
         start_date = cols[2].text.strip()
@@ -46,6 +64,11 @@ for i in range(1,100):
         zakazchik_inn = cols[9].text.strip()
         print(start_narx,kontrakt_narx, zakazchik,zakazchik_inn)
         
+        # lot raqamini tekshirish
+        if existsLotNum(lot1):
+            print(lot1,'bazada mavjud')
+            mavjudLotlar = mavjudLotlar + 1
+            continue
         # g'olibni olish
         req1 = requests.request(
                 method='get', 
@@ -83,3 +106,5 @@ for i in range(1,100):
         #        data='{ "type": 0, "lotId": ' +  }')
     mydb.commit()
     #break
+
+print('barcha mavjud lotlar:',mavjudLotlar)

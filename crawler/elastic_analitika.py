@@ -5,10 +5,9 @@ es = Elasticsearch()
 import mysql.connector
 
 def getgolibname(inn):
-    print("getGolibInn:",inn)
     global mydb
     mycursor = mydb.cursor()
-    sql = "SELECT fn.nom FROM firma_noms fn INNER JOIN firmas f on f.fnomid = fn.id and f.inn = %s"
+    sql = "SELECT fn.nom from firma_noms fn inner join firmas f on f.fnomid = fn.id where f.inn = %s"
     mycursor.execute(sql,(str(inn),))
     myresult = mycursor.fetchall()
     ret = ""
@@ -17,18 +16,19 @@ def getgolibname(inn):
     mycursor.close()
     return ret
 
-def getGolibInn(inn):
-    print("getGolibInn:",inn)
+def getGolibInn(glid):
     global mydb
     mycursor = mydb.cursor()
-    sql = "SELECT inn FROM golibs WHERE id = %s"
-    mycursor.execute(sql,(str(inn),))
+    sql = "SELECT inn,nom FROM golibs WHERE id = %s"
+    mycursor.execute(sql,(str(glid),))
     myresult = mycursor.fetchall()
-    ret = 0
+    ret = ""
+    nom = ""
     for x in myresult:
-        ret = x[0]
+        ret = x[0].strip()
+        nom = x[1].strip()
     mycursor.close()
-    return ret
+    return ret,nom
 
 mydb = mysql.connector.connect(
   host="localhost",
@@ -55,9 +55,12 @@ for x in myresult:
     zakazchik = x[9]
     zakazchikinn = x[10]
     glid = x[11]
-    golibinn = getGolibInn(glid)
+    golibinn,golibnom = getGolibInn(glid)
+    #
     golibfirmaname = getgolibname(golibinn)
-    #print(golibfirmaname)
+    if len(golibfirmaname) < 2:
+        golibfirmaname = golibnom
+    #continue
     #exit(0)
     doc = {
         'tur': tur,
@@ -74,9 +77,9 @@ for x in myresult:
         'golibnomi':golibfirmaname,
         'timestamp': end_date,
     }
-    res = es.index(index="zero_corruption2", id=rid, document=doc)
+    res = es.index(index="zero_corruption3", id=rid, document=doc)
     print(res['result'])
-    es.indices.refresh(index="zero_corruption2")
+    es.indices.refresh(index="zero_corruption3")
     # golib_name = ""
     # golib_inn = 0
     #print(x)
