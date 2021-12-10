@@ -13,6 +13,19 @@ mydb = mysql.connector.connect(
 
 mycursor = mydb.cursor()
 
+def existsLotNum(lotnum):
+    global mydb
+    mycursor = mydb.cursor()
+    sql = "SELECT id FROM buyurtmas WHERE lotnum = %s"
+    mycursor.execute(sql,(str(lotnum),))
+    myresult = mycursor.fetchall()
+    ret = False
+    for x in myresult:
+        ret = True
+        break
+    mycursor.close()
+    return ret
+mavjudLotlar = 0
 for i in range(1,100):
     url = "http://xarid.uz/ajax/exarid?page=%d&auction=Stats&status=Completed&year=2021" % (i)
     print(url)
@@ -34,6 +47,13 @@ for i in range(1,100):
         len1 = len(cols)
         #print(len1)
         lot1 = cols[1].text.strip()
+
+        # lot raqamini tekshirish
+        if existsLotNum(lot1):
+            print(lot1,'bazada mavjud')
+            mavjudLotlar = mavjudLotlar + 1
+            continue
+
         start_date = cols[3].text.strip()
         #print(start_date)
         start_date = datetime.datetime.strptime(start_date, "%d.%m.%Y").date()
@@ -55,9 +75,9 @@ for i in range(1,100):
                 url='http://xarid.uz/ajax/ExaridDealDetails', 
                 json={"type": 0, "lotId":lot1} )
                 #data='{ "type": 0, "lotId":' + lot1 + '}')
-        print(req1.status_code)
+        #print(req1.status_code)
         reqjson = req1.json() 
-        print(reqjson['items'])
+        #print(reqjson['items'])
         sql = "INSERT INTO golibs(nom,inn,direktor,tasischi) VALUES(%s,%s,%s,%s)"
         mycursor.execute(sql, (
             reqjson['items'][0]['ProviderName'],
@@ -66,7 +86,7 @@ for i in range(1,100):
             reqjson['items'][0]['Beneficiary']))
         
         gid = mycursor.lastrowid
-        print(gid)
+        #print(gid)
         sql = "INSERT INTO buyurtmas(turi,lotnum,start_date,end_datetime,count,nom,start_narx,end_narx,zakazchik,zakazchik_inn,glid) VALUES(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)"
         mycursor.execute(sql, ('korporativ',lot1,start_date,end_date,int(count),nom,int(start_narx),int(kontrakt_narx),zakazchik,zakazchik_inn,gid))
         

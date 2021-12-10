@@ -130,3 +130,39 @@ datahack.uz antikorrupsiya uchun loyiha.
 ==========
 
 # my.soliq.uz dan STIR orqali YATT rahbarini olish
+
+
+
+09-12-2021
+==========
+
+# PF-5729
+## O‘ZBEKISTON RESPUBLIKASIDA KORRUPSIYAGA QARSHI KURASHISH TIZIMINI YANADA TAKOMILLASHTIRISH CHORA-TADBIRLARI TO‘G‘RISIDA
+    sud
+        sudyalarga har qanday tarzda qonunga xilof ravishda ta’sir o‘tkazish shart-sharoitlarini istisno etish
+        sud hokimiyatining mustaqilligini yanada mustahkamlash
+    
+    davlat xizmatchilari daromadlarini deklaratsiya qilish
+    davlat xizmatchilarini tanlov asosida saralab olish
+
+    idoraviy korrupsiyaga qarshi kurashishning samarali dasturlarini amalga oshirish
+
+    korrupsiya xavf-xatariga eng ko‘p duch keladigan davlat xizmatchilarining faoliyat sohalari va lavozimlari, shuningdek, ularning funksiyalari (vakolatlari)ning ro‘yxatini shakllantiradi
+
+
+### affillangan shaxslarning
+
+
+# uzex dxarid exarid
+    dan barcha faol lot larni olish ularni ichidagi har bir maxsulotni analiz qilib chiqish
+
+
+10-12-2021
+==========
+
+## neo4j queries
+    MATCH (m:Mahsulot{nom:"ТМЗ"}),(m)<--(bs:Buyurtma3S),(bs)-->(f:Firma{inn:"304507685"}),(f)-->(t:Tasischi),(r:Rahbar)<--(f),(fn:FirmaNom)<--(f),(b:Buyurtma{turi:"budjet"})<--(bs) RETURN *
+    
+## O'zgarishlar
+    G'olib firmalar
+    Zakazchik firmalar
