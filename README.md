@@ -166,3 +166,20 @@ datahack.uz antikorrupsiya uchun loyiha.
 ## O'zgarishlar
     G'olib firmalar
     Zakazchik firmalar
+
+
+
+11-12-2021
+==========
+
+## TASHKILOTLARNING MASʼUL HODIMLARI 
+    https://project.gov.uz/oz/site/login
+
+## neo4j Bloom
+
+## БЮДЖЕТ ХАРИДЛАР
+    http://xarid.uz/dxarid/deals?status=Completed&auction=Stats
+
+
+    http://xarid.uz/dxarid/deals
+    https://etender.uzex.uz/home
