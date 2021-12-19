@@ -63,9 +63,10 @@ for i in range(1,600):
         start_narx = cols[10].text.strip().replace("UZS","").replace(" ","").split(',')[0]
         #kontrakt_narx = cols[8].text.strip().replace("UZS","").replace(" ","").split(',')[0]
         kontrakt_narx = start_narx
-        zakazchik = cols[11].text.strip()
-        zakazchik_inn = cols[12].text.strip()
+        zakazchik = cols[12].text.strip()
+        zakazchik_inn = cols[11].text.strip()
         print(start_narx,kontrakt_narx, zakazchik,zakazchik_inn)
+        #exit(0)
         aa = cols[13].find_all('a')#[0].get_attribute('onclick').strip()
         #print(aa[0])
         aa = aa[0]

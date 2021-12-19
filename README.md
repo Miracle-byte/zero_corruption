@@ -183,3 +183,13 @@ datahack.uz antikorrupsiya uchun loyiha.
 
     http://xarid.uz/dxarid/deals
     https://etender.uzex.uz/home
+
+13-12-2021
+==========
+
+
+## Python bilan olingan ma'lumotlarni neo4j ga kiritmoqdamiz
+
+
+19-12-2021
+==========
