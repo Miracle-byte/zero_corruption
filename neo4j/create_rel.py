@@ -5,7 +5,7 @@ import mysql.connector
 # like query in cypher
 # MATCH (gr:GolibRahbar) Where gr.fio =~ '.*MIROD.*' RETURN gr LIMIT 10
 mydb = mysql.connector.connect(
-  host="192.168.0.104",
+  host="127.0.0.1",
   user="test1",
   password="test1",
   database="zerocorruption2"
@@ -46,7 +46,7 @@ firma_tasischis = mycursor.fetchall()
 # MATCH (n) DETACH DELETE n
 # MERGE bilan faqat 1 kopiya yaratish uchun
 if __name__ == "__main__":
-    driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "test2"), encrypted=False)
+    driver = GraphDatabase.driver("bolt://localhost:7687", auth=("neo4j", "test1"), encrypted=False)
     session = driver.session()
     #i = 10
     for x in myresult:
@@ -58,6 +58,11 @@ if __name__ == "__main__":
                 break
         
         lotnum =x[2]
+        
+        start_date = x[3]
+        start_narx = x[7]
+        end_narx = x[8]
+
         mahsulotnom = x[6]
 
         zakazchiknom = x[9]
@@ -103,13 +108,20 @@ if __name__ == "__main__":
             if r[0] == golibFirma[3]:
                 golibFirmaRahbar = r[1]
         
+        zakaztasischis = []
+        golibtasischis = []
+
         result = session.run("""
                 MERGE(m:Mahsulot{nom:$mnom}) 
-                MERGE(b:Bitim{lotnum:$lotnum})
+                MERGE(b:Bitim{lotnum:$lotnum,start_date:$start_date,start_narx:$start_narx,end_narx:$end_narx,taklifson:$taklifson})
                 MERGE(z:Zakazchik{nom:$znom,inn:$zinn})
                 MERGE(zr:ZakazchikRahbar{fio:$zrfio})
                 MERGE(g:Golib{nom:$gnom,inn:$ginn})
                 MERGE(gr:GolibRahbar{fio:$grfio})""",
+                start_date = start_date,
+                start_narx = start_narx,
+                end_narx = end_narx,
+                taklifson = x[5],
             lotnum=lotnum,mnom=mahsulotnom,
             znom=zakazchikFirmaNom,zinn=zakazchikinn,zrfio=zakazchikRahbarNom,
             gnom=golibFirmaNom,ginn=golibinn,grfio=golibFirmaRahbar)
@@ -141,6 +153,34 @@ if __name__ == "__main__":
                 MATCH(gr:GolibRahbar{fio:$grfio})
                 MERGE (g)<-[:RAHBAR]-(gr)""",
             gnom=golibFirmaNom,ginn=golibinn,grfio=golibFirmaRahbar)
+        
+        # tasischilarni ham tekshiramiz
+        # golibFirma
+        # zakazchikFirma
+        # firma_tasischis [id] [fid] [tid] [ulush]
+        # tasischis [id] [nom] 
+        for ft in firma_tasischis:
+            fid = ft[1]
+            tid = ft[2]
+            ulush = ft[3]
+            if fid == golibFirma[0]:
+                for t in tasischis:
+                    if t[0] == tid:
+                        tnom = t[1]
+                        result = session.run("""
+                            MATCH(g:Golib{nom:$gnom,inn:$ginn})
+                            MERGE(ts:Tasischi{nom:$tnom,ulush:$ulush})
+                            MERGE (g)<-[:TASISCHI]-(ts)
+                            """,gnom=golibFirmaNom,ginn=golibinn,tnom=tnom,ulush=ulush)
+            elif fid == zakazchikFirma[0]:
+                for t in tasischis:
+                    if t[0] == tid:
+                        tnom = t[1]
+                        result = session.run("""
+                            MATCH(z:Zakazchik{nom:$znom,inn:$zinn})
+                            MERGE(ts:Tasischi{nom:$tnom,ulush:$ulush})
+                            MERGE (z)<-[:TASISCHI]-(ts)
+                            """,znom=zakazchikFirmaNom,zinn=zakazchikinn,tnom=tnom,ulush=ulush)
         #i = i - 1
         #if i == 0 :
         #    break
