@@ -190,11 +190,23 @@ datahack.uz antikorrupsiya uchun loyiha.
 
 ## Python bilan olingan ma'lumotlarni neo4j ga kiritmoqdamiz
 
-
-19-12-2021
+30-12-2021
 ==========
 
+http://openid.uzex.uz/Files/instructoin_ru.docx
 
+dxarid.uzex.uz
+exarid.uzex.uz
+shop.uzex.uz
+eshop.uzex.uz
+millidokon.uzex.uz
+emilliydokon.uzex.uz
 
-27-12-2021
-==========
+01-01-2022
+===========
+
+#### Firmalar haqida qo'shimcha ma'lumotlar
+    https://statsnet.co/companies/uz/%D0%A2%D0%90%D0%A8%D0%9A%D0%95%D0%9D%D0%A2?page=1
+
+#### kerakli infolarni olish:
+    MATCH(b:Bitim) MATCH(b)--(g:Golib) MATCH (b)--(z:Zakazchik) MATCH (z)--(zr:ZakazchikRahbar) MATCH (g)--(t:Tasischi) MATCH (z)--(t) MATCH(m:Mahsulot)--(b) MATCH (gr:GolibRahbar)--(g) RETURN * ORDER BY b.start_narx DESC LIMIT 10 
