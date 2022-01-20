@@ -210,3 +210,10 @@ emilliydokon.uzex.uz
 
 #### kerakli infolarni olish:
     MATCH(b:Bitim) MATCH(b)--(g:Golib) MATCH (b)--(z:Zakazchik) MATCH (z)--(zr:ZakazchikRahbar) MATCH (g)--(t:Tasischi) MATCH (z)--(t) MATCH(m:Mahsulot)--(b) MATCH (gr:GolibRahbar)--(g) RETURN * ORDER BY b.start_narx DESC LIMIT 10 
+
+
+
+20-01-2022
+===========
+
+“Давлат харидлари тўғрисида”ги қонуннинг 42-моддасига кўра, давлат харидларида аффилланганлик ҳолатлари аниқланса, харид иштирокчиси жараёндан четлатилиши лозим.
